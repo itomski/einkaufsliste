@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Einkaufsliste</title>
+
+    <style>
+        table, tr, th, td {
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Einkaufsliste</h1>
+
+    <!--
+        Werte aus dem Formular werden nach dem Absenden Objekteigenschaften zugeweisen,
+        wenn sie gleichen Namen haben
+    -->
+    <form action="/add" method="post">
+        <label for="title">Titel</label>
+        <input type="text" name="titel" id="title">
+        <input type="checkbox" name="erledigt" id="erledigt">
+        <button type="submit">Einfügen</button>
+    </form>
+
+    <hr>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Titel</th>
+            <th>Datum</th>
+            <th>Erledigt</th>
+            <th>&nbsp;</th>
+        </tr>
+
+        <tr th:each="eintrag : ${einkaufsListe}">
+            <td th:text="${eintrag.id}"></td>
+            <td th:text="${eintrag.titel}"></td>
+            <td th:text="${eintrag.erzeugtAm}"></td>
+            <td th:text="${eintrag.erledigt}"></td>
+            <td>
+                <a th:href="@{/remove/{id}(id=${eintrag.id})}">Löschen</a>
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+</html>
