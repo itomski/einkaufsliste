@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body>
+
+  <main class="container">
+
+    <nav>
+      <ul>
+        <li><strong>Einkaufsliste</strong></li>
+      </ul>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/list">Liste</a></li>
+        <li><a href="/products">Produkte</a></li>
+        <li><a href="/customers">Kunden</a></li>
+      </ul>
+    </nav>
+
+    <h1 th:text="${headline}"></h1>
+  </main>
+</body>
+</html>
