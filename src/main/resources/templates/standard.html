@@ -24,6 +24,53 @@
     </nav>
 
     <h1 th:text="${headline}"></h1>
+
+    <div th:if="${products}">
+        <a href="/products/new">Neues Produkt anlegen</a>
+        <table>
+            <thead>
+              <tr>
+                  <th>Nr</th>
+                  <th>Name</th>
+                  <th>Beschreibung</th>
+                  <th>Anzahl</th>
+                  <th>Preis</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${products}">
+                    <td th:text="${p.nr}"></td>
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${p.description}"></td>
+                    <td th:text="${p.quantity}"></td>
+                    <td th:text="${p.price}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${customers}">
+        <a href="/customers/new">Neuen Kunden anlegen</a>
+        <table>
+          <thead>
+              <tr>
+                  <th>Nr</th>
+                  <th>Vorname</th>
+                  <th>Nachname</th>
+                  <th>Geburtsdatum</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr th:each="c : ${customers}">
+                  <td th:text="${c.nr}"></td>
+                  <td th:text="${c.firstname}"></td>
+                  <td th:text="${c.lastname}"></td>
+                  <td th:text="${c.birthDate}"></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+
   </main>
 </body>
 </html>

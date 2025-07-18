@@ -1,11 +1,19 @@
 package de.gfn.einkaufsliste;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "products")
 public class Product {
 
+    @Id
+    @GeneratedValue
     private long nr;
 
+    @Column(length = 100)
     private String name;
 
+    @Column(length = 1000)
     private String description;
 
     private int quantity;

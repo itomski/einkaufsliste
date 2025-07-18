@@ -1,13 +1,21 @@
 package de.gfn.einkaufsliste;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "customers")
 public class Customer {
 
+    @Id // Primärschlüssel
+    @GeneratedValue // Auto-Increment
     private long nr;
 
+    @Column(length = 50)
     private String firstname;
 
+    @Column(length = 50)
     private String lastname;
 
     private LocalDate birthDate;

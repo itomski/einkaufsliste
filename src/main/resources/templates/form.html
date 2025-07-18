@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body>
+
+  <main class="container">
+
+    <nav>
+      <ul>
+        <li><strong>Einkaufsliste</strong></li>
+      </ul>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/list">Liste</a></li>
+        <li><a href="/products">Produkte</a></li>
+        <li><a href="/customers">Kunden</a></li>
+      </ul>
+    </nav>
+
+    <h1 th:text="${headline}"></h1>
+
+    <div th:if="${form == 'product'}">
+        <form action="/products/save" method="post">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div>
+                <label for="description">Beschreibung</label>
+                <textarea name="description" id="description" rows="10"></textarea>
+            </div>
+            <div>
+                <label for="quantity">Anzahl</label>
+                <input type="text" id="quantity" name="quantity">
+            </div>
+            <div>
+                <label for="price">Preis</label>
+                <input type="text" id="price" name="price">
+            </div>
+            <button type="submit">Speichern</button>
+        </form>
+    </div>
+
+      <div th:if="${form == 'customer'}">
+          <form action="/customers/save" method="post">
+              <div>
+                  <label for="firstname">Vorname</label>
+                  <input type="text" id="firstname" name="firstname">
+              </div>
+              <div>
+                  <label for="lastname">Nachname</label>
+                  <input type="text" id="lastname" name="lastname">
+              </div>
+              <div>
+                  <label for="birthDate">Geburtsdatum</label>
+                  <input type="text" id="birthDate" name="birthDate">
+              </div>
+              <button type="submit">Speichern</button>
+          </form>
+      </div>
+
+  </main>
+</body>
+</html>
