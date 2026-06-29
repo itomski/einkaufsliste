@@ -1,11 +1,17 @@
 package de.lubowiecki.einkaufsliste;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "eintraege") // Name der Tabelle
 public class Eintrag {
 
-    private static int count;
-
+    @Id
+    @GeneratedValue
     private int id;
 
     private String name;
@@ -14,16 +20,13 @@ public class Eintrag {
     private boolean erledigt;
 
     public Eintrag() {
-        id = ++count;
     }
 
     public Eintrag(String name) {
-        this(); // Ruft als erstest den parameterlosen Konstruktor auf, der die ID vergibt
         this.name = name;
     }
 
     public Eintrag(String name, boolean erledigt) {
-        this(); // Ruft als erstest den parameterlosen Konstruktor auf, der die ID vergibt
         this.name = name;
         this.erledigt = erledigt;
     }
