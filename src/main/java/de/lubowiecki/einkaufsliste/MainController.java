@@ -3,6 +3,7 @@ package de.lubowiecki.einkaufsliste;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -44,8 +45,23 @@ public class MainController {
     }
 
     @PostMapping("/add")
-    public String add(@RequestBody String name, Model ui) {
+    public String add(String name) {
+        repo.save(new Eintrag(name));
+        return "redirect:/service";
+    }
 
-        return "standard";
+    @GetMapping("/toggle/{id}")
+    public String toggle(@PathVariable int id) {
+        repo.findById(id).ifPresent(e -> {
+            e.toggleErledigt();
+            repo.save(e);
+        });
+        return "redirect:/service";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable int id) {
+        repo.deleteById(id);
+        return "redirect:/service";
     }
 }

@@ -39,41 +39,44 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-6">
-                <h2>Neuer Eintrag</h2>
-                <form action="/add" method="post">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" id="name" placeholder="Name" class="form-control">
-                    </div>
-                    <button class="btn btn-primary">Hinzufügen</button>
-                </form>
+        <th:block th:if="${showTable}">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Neuer Eintrag</h2>
+                    <form action="/add" method="post">
+                        <div class="input-group mb-3">
+                            <input type="text" name="name" id="name" placeholder="Name" class="form-control">
+                            <button class="btn btn-primary">Hinzufügen</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <div class="row" th:if="${showTable}">
-            <div class="col">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Erledigt</th>
-                        </tr>
-                    </thead>
+            <div class="row" >
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr th:each="eintrag : ${eintraege}">
-                            <td th:text="${eintrag.id}"></td>
-                            <td th:text="${eintrag.name}"></td>
-                            <td th:text="${eintrag.erledigt}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                            <tr th:each="eintrag : ${eintraege}">
+                                <td th:text="${eintrag.id}"></td>
+                                <td th:text="${eintrag.name}"></td>
+                                <td>
+                                    <a th:href="@{'/toggle/' + ${eintrag.id}}" th:text="${eintrag.erledigt ? 'erledigt' : 'offen'}" class="btn" th:classappend="${eintrag.erledigt ? 'btn-warning' : 'btn-success'}"></a>
+                                    <a th:href="@{'/delete/' + ${eintrag.id}}" class="btn btn-danger">löschen</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
+        </th:block>
     </main>
 
     <footer class="container"></footer>
