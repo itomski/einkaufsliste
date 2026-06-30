@@ -1,8 +1,11 @@
 package de.lubowiecki.einkaufsliste;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -50,7 +53,7 @@ public class ApiController {
 //                .filter(istOffen) // Filtern
 //                .collect(Collectors.toList()); // Elemente als Liste sammeln
         // TODO: Filter setzen
-        return repo.findAll();
+        return repo.findByErledigt(false);
     }
 
     // URL: http://localhost:8080/api/v1/done
@@ -69,13 +72,22 @@ public class ApiController {
 //                .filter(Eintrag::isErledigt) // Methoden-Referenz
 //                .collect(Collectors.toList());
 
-        // TODO: Filter setzen
-        return repo.findAll();
+        return repo.findByErledigt(true);
+    }
+
+    @GetMapping("/details/{id}")
+    public Eintrag getDetails(@PathVariable int id) {
+        // Es wird der gefundene Eintrag zurückgegeben...
+        return repo.findById(id)
+                .orElse(new Eintrag()); // ... oder ein leeres
     }
 
     @PostMapping("/add")
     public Eintrag hinzufuegen(@RequestBody Eintrag eintrag) {
         //eintraege.add(eintrag);
+        if(eintrag.getName() == null || eintrag.getName().isEmpty()) {
+            throw new IllegalArgumentException("Name ist leer");
+        }
         repo.save(eintrag);
         return eintrag;
     }
@@ -98,12 +110,32 @@ public class ApiController {
 //                        .get();
 //
 //        e.setName(eintrag.getName());
-//        // TODO: Setter für erledigt bauen
+//        e.setErledigt(eintrag.isErledigt());
 //        return eintraege;
 
-        Eintrag e = repo.findById(id).get();
-        e.setName(eintrag.getName());
-        repo.save(e);
+        if(eintrag.getName() == null || eintrag.getName().isEmpty()) {
+            throw new IllegalArgumentException("Name ist leer");
+        }
+
+        repo.findById(id).ifPresent(e -> {
+            e.setName(eintrag.getName());
+            e.setErledigt(eintrag.isErledigt());
+            repo.save(e);
+        });
         return repo.findAll();
+    }
+
+    @PutMapping("/status/change/{id}")
+    public List<Eintrag> toggleStatus(@PathVariable int id) {
+        repo.findById(id).ifPresent(e -> {
+            e.toggleErledigt();
+            repo.save(e);
+        });
+        return repo.findAll();
+    }
+
+    @ExceptionHandler
+    void handleException(IllegalArgumentException e, HttpServletResponse respons) throws IOException {
+        respons.sendError(HttpStatus.BAD_REQUEST.value());
     }
 }

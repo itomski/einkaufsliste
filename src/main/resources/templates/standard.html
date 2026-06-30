@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Name der Seite...</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.8/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <header class="container"></header>
+
+    <nav class="container">
+        <!-- ul>li*4>a -->
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/service">Services</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+
+        <div class="row">
+            <div class="col">
+                <h1 th:text="${headline}"></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <p th:text="${description}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h2>Neuer Eintrag</h2>
+                <form action="/add" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" id="name" placeholder="Name" class="form-control">
+                    </div>
+                    <button class="btn btn-primary">Hinzufügen</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row" th:if="${showTable}">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Erledigt</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="eintrag : ${eintraege}">
+                            <td th:text="${eintrag.id}"></td>
+                            <td th:text="${eintrag.name}"></td>
+                            <td th:text="${eintrag.erledigt}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="container"></footer>
+
+    <script src="/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

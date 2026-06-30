@@ -51,6 +51,10 @@ public class Eintrag {
         return erledigt;
     }
 
+    public void setErledigt(boolean erledigt) {
+        this.erledigt = erledigt;
+    }
+
     public void toggleErledigt() {
         this.erledigt = !erledigt;
     }
